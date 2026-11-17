@@ -1,0 +1,20 @@
+{
+  "name": "academia-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "API de mensalidades da Academia com PostgreSQL",
+  "engines": { "node": ">=22 <25" },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --env-file=.env --watch src/server.js",
+    "migrate": "node src/migrate.js",
+    "check": "node --check src/app.js && node --check src/database.js && node --check src/migrate.js && node --check src/server.js",
+    "test": "node --test test/*.test.js",
+    "test:integration": "node --test test/postgres.integration.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}
