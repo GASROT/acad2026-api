@@ -25,6 +25,8 @@ A API escuta em `PORT` (padrão 3000). O arquivo de ambiente é ignorado pelo Gi
 
 ## Contrato HTTP v1
 
+CORS está habilitado para qualquer origem, com os métodos `GET`, `POST` e `OPTIONS` e o cabeçalho `Content-Type`. O middleware responde ao preflight de requisições JSON. Não são habilitadas credenciais de navegador (cookies). Essa configuração atende à API pública de demonstração; CORS não substitui autenticação.
+
 | Método e rota | Resposta | Finalidade |
 | --- | --- | --- |
 | `GET /` | 200 | Identificação e rotas |

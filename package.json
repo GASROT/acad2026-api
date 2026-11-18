@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "description": "API de mensalidades da Academia com PostgreSQL",
-  "engines": { "node": ">=22 <25" },
+  "engines": {
+    "node": ">=22 <25"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --env-file=.env --watch src/server.js",
@@ -14,6 +16,7 @@
     "test:integration": "node --test test/postgres.integration.js"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.1.0",
     "pg": "^8.16.3"
   }

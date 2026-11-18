@@ -41,6 +41,33 @@ function post(body) {
 
 const novo = () => ({ id: randomUUID(), aluno: 'Aluno teste', matricula: '0001', mensalidade: '129.90' });
 
+test('CORS permite ler respostas a partir de outra origem sem credenciais', async () => {
+  const response = await fetch(`${baseUrl}/mensalidades`, {
+    headers: { Origin: 'http://localhost:5173' },
+  });
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('access-control-allow-origin'), '*');
+  assert.equal(response.headers.get('access-control-allow-credentials'), null);
+  assert.deepEqual(await response.json(), []);
+});
+
+test('preflight de POST JSON responde antes de acessar o banco', async () => {
+  const response = await fetch(`${baseUrl}/mensalidades`, {
+    method: 'OPTIONS',
+    headers: {
+      Origin: 'http://localhost:5173',
+      'Access-Control-Request-Method': 'POST',
+      'Access-Control-Request-Headers': 'content-type',
+    },
+  });
+  assert.equal(response.status, 204);
+  assert.equal(response.headers.get('access-control-allow-origin'), '*');
+  assert.equal(response.headers.get('access-control-allow-methods'), 'GET,POST,OPTIONS');
+  assert.equal(response.headers.get('access-control-allow-headers'), 'Content-Type');
+  assert.equal(response.headers.get('access-control-allow-credentials'), null);
+  assert.equal(queries.length, 0);
+});
+
 test('POST 201 e GET preservam matrícula e centavos', async () => {
   const body = novo();
   const response = await post(body);
